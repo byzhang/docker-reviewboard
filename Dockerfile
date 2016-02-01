@@ -23,5 +23,6 @@ RUN chmod +x start.sh shell.sh
 VOLUME ["/.ssh", "/media/"]
 
 EXPOSE 8000
+EXPOSE 8443
 
 CMD /start.sh

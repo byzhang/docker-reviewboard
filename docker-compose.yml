@@ -1,0 +1,23 @@
+rb-postgres:
+  restart: always
+  image: postgres
+  environment:
+   - POSTGRES_USER=reviewboard
+  volumes:
+   - /data/srv/docker/reviewboard/postgres/data:/var/lib/postgresql/data
+rb-memcached:
+  restart: always
+  image: memcached:1.4.24
+reviewboard:
+  restart: always
+  image: byzhang/reviewboard
+  ports:
+   - "8000:8000"
+   - "8443:8443"
+  links:
+   - rb-postgres:pg
+   - rb-memcached:memcached
+  volumes:
+   - /data/srv/docker/reviewboard/media:/media
+   - /data/srv/docker/reviewboard/.ssh:/.ssh
+  command: "/bin/sh -c 'sleep 10; /start.sh'"
